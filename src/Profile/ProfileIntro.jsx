@@ -89,8 +89,8 @@ export default function ProfileIntro({isMobile}) {
             </div>
             <div data-aos="fade-up-left" data-aos-duration="500">
                 <img
-                    src="https://avatars.githubusercontent.com/u/126472966?s=400&u=0efefeda99114634f60b415af8491f787519c379&v=4"
-                    alt="Yash Darak"
+                    src="https://avatars.githubusercontent.com/u/71687356?v=4"
+                    alt="Jay Shiurkar"
                     className="proflie-photo-img "
                 />
             </div>
