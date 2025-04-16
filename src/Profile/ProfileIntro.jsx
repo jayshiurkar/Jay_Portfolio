@@ -34,7 +34,7 @@ export default function ProfileIntro({isMobile}) {
                 <div style={{ fontSize: "35px" }} className="profile-title-text">
                     Hey there, I'm
                 </div>
-                <div className="profile-title-text" style={{lineHeight: '1'}}>Yash Darak</div>
+                <div className="profile-title-text" style={{lineHeight: '1'}}>Jay Shiurkar</div>
                 <div data-aos="zoom-in" data-aos-delay="300"><span className="profile-subtitle-text" ref={textRef}></span></div>
                 <div className="profile-description-div" style={{ marginTop: "20px" }} >
                     I am a curious human. I am currently pursuing my Masters in Applied Mathematics from NYU.
