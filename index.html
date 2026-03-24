@@ -1,13 +1,655 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jay Shiurkar</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jay Shiurkar | Client Engagement</title>
+  <meta name="description" content="Client engagement, financial technology, and institutional workflow portfolio for Jay Shiurkar." />
+  <style>
+    :root{
+      --bg:#070b14;
+      --panel:rgba(255,255,255,.06);
+      --panel-2:rgba(255,255,255,.04);
+      --line:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.96);
+      --muted:rgba(255,255,255,.65);
+      --soft:rgba(255,255,255,.45);
+      --cyan:#67e8f9;
+      --blue:#60a5fa;
+      --violet:#a78bfa;
+      --shadow:0 18px 60px rgba(0,0,0,.28);
+      --radius:28px;
+      --radius-sm:20px;
+      --max:1280px;
+      font-synthesis-weight:none;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 8% 2%, rgba(103,232,249,.12), transparent 26%),
+        radial-gradient(circle at 90% 12%, rgba(96,165,250,.12), transparent 22%),
+        radial-gradient(circle at 50% 94%, rgba(167,139,250,.12), transparent 28%),
+        linear-gradient(to bottom, rgba(255,255,255,.03), transparent 20%, transparent 82%, rgba(255,255,255,.02));
+    }
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .shell{max-width:var(--max);margin:0 auto;padding:20px 20px 108px}
+    .topbar{display:grid;gap:14px}
+    .brand,.metric,.panel,.nav-btn,.tile,.hero-card,.image-card,.accordion,.cta-btn,.pill{backdrop-filter:blur(18px)}
+    .brand{
+      border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);
+      padding:20px;box-shadow:var(--shadow)
+    }
+    .brand .name{font-size:14px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.76)}
+    .brand .sub{margin-top:8px;font-size:14px;color:var(--soft)}
+    .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .metric{
+      border:1px solid var(--line);background:rgba(0,0,0,.20);border-radius:20px;padding:16px
+    }
+    .metric .label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+    .metric .value{margin-top:10px;font-size:18px;font-weight:650}
+    .content-grid{display:grid;gap:24px;margin-top:24px}
+    .sidebar{display:none}
+    .panel{
+      border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow)
+    }
+    .sidebar .panel{position:sticky;top:24px;padding:12px}
+    .eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--soft)}
+    .section-title{font-size:clamp(30px,4vw,44px);line-height:1.04;letter-spacing:-.03em;margin:12px 0 0}
+    .section-copy{margin:16px 0 0;color:var(--muted);line-height:1.8;font-size:16px}
+    .page{display:none}
+    .page.active{display:block}
+    .nav-label{padding:10px 12px 8px;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--soft)}
+    .nav-btn{
+      width:100%;display:flex;align-items:center;gap:12px;border:0;background:transparent;color:rgba(255,255,255,.62);
+      border-radius:18px;padding:14px 16px;cursor:pointer;text-align:left;transition:.2s ease
+    }
+    .nav-btn:hover{background:rgba(255,255,255,.05);color:#fff}
+    .nav-btn.active{background:rgba(255,255,255,.10);color:#fff}
+    .nav-icon{width:16px;height:16px;display:inline-grid;place-items:center;border-radius:999px;background:rgba(255,255,255,.06);font-size:10px}
+    .hero-grid,.split-grid,.two-col,.skills-grid{display:grid;gap:24px}
+    .hero-card{overflow:hidden}
+    .hero-grid .left{padding:28px 28px 34px}
+    .hero-grid .right{padding:24px;border-top:1px solid var(--line)}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(255,255,255,.04);font-size:12px;color:rgba(255,255,255,.75)
+    }
+    h1{
+      margin:22px 0 0;font-size:clamp(42px,7vw,78px);line-height:.98;letter-spacing:-.045em
+    }
+    .grad-cyan,.grad-blue,.grad-violet{
+      -webkit-background-clip:text;background-clip:text;color:transparent
+    }
+    .grad-cyan{background-image:linear-gradient(90deg,#fff,#cffafe,#fff)}
+    .grad-blue{background-image:linear-gradient(90deg,#fff,#dbeafe,#fff)}
+    .grad-violet{background-image:linear-gradient(90deg,#fff,#ede9fe,#fff)}
+    .hero-copy{max-width:760px;margin-top:18px;font-size:18px;line-height:1.85;color:var(--muted)}
+    .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+    .cta-btn{
+      border-radius:18px;padding:14px 18px;border:1px solid var(--line);cursor:pointer;transition:.2s ease
+    }
+    .cta-btn.primary{background:#fff;color:#0b1020;border-color:#fff;font-weight:650}
+    .cta-btn.secondary{background:rgba(255,255,255,.04);color:#fff}
+    .cta-btn:hover{transform:translateY(-1px)}
+    .stack-card{border:1px solid var(--line);background:rgba(0,0,0,.18);border-radius:24px;padding:18px}
+    .stack-card.shift{margin-left:28px;background:rgba(255,255,255,.04)}
+    .stack-card .k{font-size:14px;color:var(--soft)}
+    .stack-card .v{font-size:20px;line-height:1.45;margin-top:4px;font-weight:650}
+    .pad{padding:28px}
+    .card-grid{display:grid;gap:16px}
+    .mini-links{display:grid;gap:12px}
+    .tile{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px;border:1px solid var(--line);
+      background:rgba(255,255,255,.04);border-radius:20px;cursor:pointer;transition:.2s ease;color:rgba(255,255,255,.78)
+    }
+    .tile:hover{background:rgba(255,255,255,.06);color:#fff}
+    .journey-layout,.thinking-layout{display:grid;gap:24px}
+    .menu-list{padding:12px}
+    .menu-item{
+      width:100%;padding:16px;border:0;background:transparent;color:rgba(255,255,255,.60);text-align:left;
+      border-radius:18px;cursor:pointer;transition:.2s ease
+    }
+    .menu-item:hover{background:rgba(255,255,255,.05);color:#fff}
+    .menu-item.active{background:rgba(255,255,255,.10);color:#fff}
+    .menu-item .small{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.40)}
+    .menu-item .big{margin-top:6px;font-size:14px;font-weight:600}
+    .accordion{
+      border:1px solid var(--line);background:var(--panel-2);border-radius:26px;overflow:hidden;box-shadow:var(--shadow)
+    }
+    .accent-cyan{height:4px;background:linear-gradient(90deg, rgba(103,232,249,.8), rgba(96,165,250,0))}
+    .accent-indigo{height:4px;background:linear-gradient(90deg, rgba(96,165,250,.8), rgba(129,140,248,0))}
+    .accent-violet{height:4px;background:linear-gradient(90deg, rgba(167,139,250,.8), rgba(129,140,248,0))}
+    .accordion-head{display:flex;gap:14px;justify-content:space-between;align-items:flex-start;padding:24px;cursor:pointer}
+    .accordion-title{font-size:26px;font-weight:700;line-height:1.2}
+    .accordion-kicker{font-size:14px;color:var(--soft)}
+    .accordion-summary{margin-top:12px;font-size:15px;line-height:1.8;color:var(--muted)}
+    .chev{
+      width:36px;height:36px;display:grid;place-items:center;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:rgba(255,255,255,.75)
+    }
+    .accordion-body{max-height:0;overflow:hidden;transition:max-height .28s ease,opacity .28s ease;opacity:0}
+    .accordion.open .accordion-body{max-height:420px;opacity:1}
+    .accordion.open .chev{transform:rotate(180deg);background:rgba(255,255,255,.10)}
+    .accordion-body .inner{padding:0 24px 24px}
+    .rule{height:1px;background:var(--line);margin:0 0 18px}
+    .body-copy{font-size:15px;line-height:1.85;color:rgba(255,255,255,.74)}
+    .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .tag{padding:7px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:12px;color:rgba(255,255,255,.58)}
+    .skill-venn-wrap{padding:18px;border-radius:28px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+    .skill-venn{width:100%;height:auto}
+    .seg-grid{display:grid;gap:12px;margin-top:18px}
+    .seg-btn{
+      border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:18px;padding:16px;text-align:left;cursor:pointer;color:rgba(255,255,255,.68);transition:.2s ease
+    }
+    .seg-btn:hover{background:rgba(255,255,255,.06);color:#fff}
+    .seg-btn.active{background:rgba(255,255,255,.10);color:#fff;border-color:rgba(255,255,255,.16)}
+    .seg-btn .small{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.40)}
+    .seg-btn .big{margin-top:8px;font-size:14px;font-weight:600}
+    .image-grid{display:grid;gap:0}
+    .image-card{position:relative;min-height:240px;overflow:hidden}
+    .image-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .image-card::after{
+      content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(7,11,20,.95), rgba(7,11,20,.10), transparent)
+    }
+    .image-card .caption{position:absolute;left:16px;right:16px;bottom:16px;z-index:1;font-size:14px;color:rgba(255,255,255,.84);line-height:1.5}
+    .principles{display:grid;gap:12px;margin-top:28px}
+    .principle{border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:18px;padding:16px;color:rgba(255,255,255,.75);font-size:14px;line-height:1.65}
+    .contact-grid{display:grid;gap:0}
+    .contact-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+    .bottom-nav{
+      position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:20;width:min(calc(100% - 24px),860px);
+      border:1px solid var(--line);background:rgba(255,255,255,.06);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(18px)
+    }
+    .bottom-nav .inner{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:8px}
+    .bottom-btn{
+      border:0;background:transparent;color:rgba(255,255,255,.52);padding:12px 8px;border-radius:18px;cursor:pointer;
+      font-size:11px;transition:.2s ease
+    }
+    .bottom-btn:hover{background:rgba(255,255,255,.05);color:#fff}
+    .bottom-btn.active{background:rgba(255,255,255,.10);color:#fff}
+    .right-glow{position:absolute;right:0;top:0;width:180px;height:180px;border-radius:999px;background:rgba(167,139,250,.12);filter:blur(48px)}
+    .small-space{height:8px}
+    @media (min-width: 900px){
+      .topbar{grid-template-columns:1fr 530px;align-items:center}
+      .content-grid{grid-template-columns:260px minmax(0,1fr)}
+      .sidebar{display:block}
+      .bottom-nav{display:none}
+      .hero-grid{grid-template-columns:1.15fr .85fr}
+      .hero-grid .right{border-top:0;border-left:1px solid var(--line)}
+      .split-grid{grid-template-columns:1.1fr .9fr}
+      .journey-layout{grid-template-columns:.85fr 1.15fr}
+      .skills-grid{grid-template-columns:1.08fr .92fr}
+      .image-grid{grid-template-columns:1fr 1fr}
+      .two-col{grid-template-columns:1fr 1fr}
+      .thinking-layout{grid-template-columns:.92fr 1.08fr}
+      .contact-grid{grid-template-columns:1.08fr .92fr}
+      .contact-grid .right{border-left:1px solid var(--line)}
+    }
+    @media (max-width: 899px){
+      .metric-grid{grid-template-columns:1fr}
+      .section-title{font-size:34px}
+      .accordion-title{font-size:22px}
+      .shell{padding-left:16px;padding-right:16px}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="name">Jay Vinod Shiurkar</div>
+        <div class="sub">Client Engagement • Financial Technology • Institutional Workflows</div>
+      </div>
+      <div class="metric-grid">
+        <div class="metric"><div class="label">Focus</div><div class="value">Client-facing fintech</div></div>
+        <div class="metric"><div class="label">Foundation</div><div class="value">Consulting + workflow design</div></div>
+        <div class="metric"><div class="label">Direction</div><div class="value">Institutional client platforms</div></div>
+      </div>
+    </header>
+
+    <div class="content-grid">
+      <aside class="sidebar">
+        <div class="panel">
+          <div class="nav-label">Browse</div>
+          <button class="nav-btn active" data-target="overview"><span class="nav-icon">◻</span><span>Overview</span></button>
+          <button class="nav-btn" data-target="journey"><span class="nav-icon">◎</span><span>Journey</span></button>
+          <button class="nav-btn" data-target="skills"><span class="nav-icon">✦</span><span>Skills</span></button>
+          <button class="nav-btn" data-target="work"><span class="nav-icon">▣</span><span>Case Work</span></button>
+          <button class="nav-btn" data-target="thinking"><span class="nav-icon">◈</span><span>How I Think</span></button>
+          <button class="nav-btn" data-target="contact"><span class="nav-icon">↗</span><span>Contact</span></button>
+        </div>
+      </aside>
+
+      <main>
+        <section class="page active" id="overview">
+          <div class="panel hero-card">
+            <div class="hero-grid">
+              <div class="left">
+                <div class="pill">✦ Building toward client engagement roles in institutional finance and fintech</div>
+                <h1>I work at the intersection of <span class="grad-cyan">clients</span>, <span class="grad-blue">financial workflows</span>, and <span class="grad-violet">technology delivery</span>.</h1>
+                <div class="hero-copy">
+                  My background spans consulting, workflow design, stakeholder alignment, and platform-oriented problem solving. I am intentionally building toward client-facing roles in financial technology where trust, operating context, and execution quality all matter.
+                </div>
+                <div class="cta-row">
+                  <button class="cta-btn primary" data-jump="journey">Explore my journey</button>
+                  <button class="cta-btn secondary" data-jump="work">View case work</button>
+                </div>
+              </div>
+              <div class="right">
+                <div class="stack-card">
+                  <div class="k">Primary interest</div>
+                  <div class="v">Client engagement in financial technology</div>
+                </div>
+                <div class="small-space"></div>
+                <div class="stack-card shift">
+                  <div class="k">What I bring</div>
+                  <div class="v">Discovery, stakeholder alignment, workflow translation, and structured delivery</div>
+                </div>
+                <div class="small-space"></div>
+                <div class="stack-card">
+                  <div class="k">What I am building</div>
+                  <div class="v">Deeper grounding in markets, portfolio workflows, and platform-led client value</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="split-grid" style="margin-top:24px">
+            <div class="panel pad">
+              <div class="eyebrow">Quick view</div>
+              <div class="section-title">Why this site exists</div>
+              <div class="section-copy">This is not meant to feel like a long essay or a generic student portfolio. It is a focused view of the work, thinking, and direction that bring me closest to client-facing platform roles in finance.</div>
+            </div>
+            <div class="panel pad">
+              <div class="eyebrow">Start anywhere</div>
+              <div class="mini-links" style="margin-top:18px">
+                <button class="tile" data-jump="journey"><span>Journey</span><span>→</span></button>
+                <button class="tile" data-jump="skills"><span>Skills</span><span>→</span></button>
+                <button class="tile" data-jump="work"><span>Case work</span><span>→</span></button>
+                <button class="tile" data-jump="thinking"><span>How I think</span><span>→</span></button>
+                <button class="tile" data-jump="contact"><span>Contact</span><span>→</span></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="journey">
+          <div class="panel pad">
+            <div class="eyebrow">Journey</div>
+            <div class="section-title">A cleaner view of how I got here</div>
+            <div class="section-copy">Instead of forcing everything onto one page, this section breaks my story into smaller pieces. Open the ones you want.</div>
+          </div>
+          <div class="journey-layout" style="margin-top:24px">
+            <div class="panel menu-list">
+              <button class="menu-item active" data-journey="consulting"><div class="small">Foundation</div><div class="big">Consulting and workflow transformation</div></button>
+              <button class="menu-item" data-journey="finance"><div class="small">Learning arc</div><div class="big">Finance depth with a practical lens</div></button>
+              <button class="menu-item" data-journey="communication"><div class="small">Strength</div><div class="big">Teaching, mentoring, and clarity</div></button>
+              <button class="menu-item" data-journey="direction"><div class="small">Long-term fit</div><div class="big">Where I am heading</div></button>
+            </div>
+            <div id="journey-detail"></div>
+          </div>
+        </section>
+
+        <section class="page" id="skills">
+          <div class="panel pad">
+            <div class="eyebrow">Skills</div>
+            <div class="section-title">A client engagement skill set built from both sides</div>
+            <div class="section-copy">I wanted this to feel more visual than a normal skills list, so the section is centered on the overlap between client-facing and technical strengths.</div>
+          </div>
+          <div class="skills-grid" style="margin-top:24px">
+            <div class="panel pad">
+              <div class="skill-venn-wrap">
+                <svg class="skill-venn" viewBox="0 0 720 420" aria-label="Venn diagram of client-facing and technical skills">
+                  <defs>
+                    <linearGradient id="leftGrad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="rgba(103,232,249,.80)" />
+                      <stop offset="100%" stop-color="rgba(96,165,250,.32)" />
+                    </linearGradient>
+                    <linearGradient id="rightGrad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="rgba(167,139,250,.75)" />
+                      <stop offset="100%" stop-color="rgba(129,140,248,.30)" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="270" cy="210" r="142" fill="url(#leftGrad)"></circle>
+                  <circle cx="450" cy="210" r="142" fill="url(#rightGrad)"></circle>
+                  <text x="155" y="104" fill="rgba(255,255,255,.92)" font-size="28" font-weight="650">Client-facing skills</text>
+                  <text x="446" y="104" fill="rgba(255,255,255,.92)" font-size="28" font-weight="650">Technical skills</text>
+                  <text x="304" y="192" fill="rgba(255,255,255,.98)" font-size="28" font-weight="700">Client</text>
+                  <text x="270" y="228" fill="rgba(255,255,255,.98)" font-size="28" font-weight="700">engagement</text>
+                  <text x="132" y="170" fill="rgba(255,255,255,.78)" font-size="17">Workshops</text>
+                  <text x="116" y="200" fill="rgba(255,255,255,.78)" font-size="17">Stakeholder alignment</text>
+                  <text x="133" y="230" fill="rgba(255,255,255,.78)" font-size="17">Training and enablement</text>
+                  <text x="140" y="260" fill="rgba(255,255,255,.78)" font-size="17">Executive communication</text>
+                  <text x="498" y="170" fill="rgba(255,255,255,.78)" font-size="17">Workflow design</text>
+                  <text x="505" y="200" fill="rgba(255,255,255,.78)" font-size="17">Testing strategy</text>
+                  <text x="520" y="230" fill="rgba(255,255,255,.78)" font-size="17">Automation</text>
+                  <text x="476" y="260" fill="rgba(255,255,255,.78)" font-size="17">Analytics and reporting</text>
+                </svg>
+              </div>
+              <div class="seg-grid">
+                <button class="seg-btn active" data-skill="hybrid"><div class="small">Intersection</div><div class="big">Where both sides meet</div></button>
+                <button class="seg-btn" data-skill="client"><div class="small">Client-facing</div><div class="big">Relationship and communication</div></button>
+                <button class="seg-btn" data-skill="technical"><div class="small">Technical</div><div class="big">Systems and delivery depth</div></button>
+              </div>
+            </div>
+            <div>
+              <div id="skills-detail"></div>
+              <div class="panel" style="overflow:hidden;margin-top:24px">
+                <div class="image-grid">
+                  <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80" alt="Team collaboration in a modern office">
+                    <div class="caption">Collaboration, workshops, and shared problem solving</div>
+                  </div>
+                  <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80" alt="Abstract connected lights">
+                    <div class="caption">Systems thinking, structure, and platform clarity</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="work">
+          <div class="panel pad">
+            <div class="eyebrow">Case work</div>
+            <div class="section-title">Examples of collaboration and complex client navigation</div>
+            <div class="section-copy">This section is where the portfolio becomes more concrete. Each card opens into a fuller view instead of putting everything in the initial scan path.</div>
+          </div>
+          <div class="two-col" style="margin-top:24px">
+            <div id="work-list" class="card-grid"></div>
+            <div id="work-detail"></div>
+          </div>
+        </section>
+
+        <section class="page" id="thinking">
+          <div class="panel pad">
+            <div class="eyebrow">How I think</div>
+            <div class="section-title">Client lens, workflow view, and working principles</div>
+            <div class="section-copy">This page turns the longer explanatory sections into shorter expandable ideas. It is easier to scan, and it still keeps the substance.</div>
+          </div>
+          <div class="thinking-layout" style="margin-top:24px">
+            <div id="thinking-list" class="card-grid"></div>
+            <div class="panel pad">
+              <div id="thinking-detail"></div>
+              <div class="principles">
+                <div class="principle">Translate complexity into clear client language</div>
+                <div class="principle">Understand the workflow before proposing the solution</div>
+                <div class="principle">Balance relationship trust with technical depth</div>
+                <div class="principle">Focus on adoption, not just delivery</div>
+                <div class="principle">Use recurring client pain points as product signals</div>
+                <div class="principle">Work across business, product, and delivery teams without losing the end user</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="contact">
+          <div class="panel" style="overflow:hidden;position:relative">
+            <div class="contact-grid">
+              <div class="pad">
+                <div class="eyebrow">Contact</div>
+                <div class="section-title">Open to conversations around client engagement, fintech platforms, and institutional workflows</div>
+                <div class="section-copy">Based in New York City. Especially interested in roles that combine client trust, financial domain learning, and platform-led problem solving.</div>
+                <div class="contact-actions">
+                  <a class="cta-btn primary" href="mailto:jayshiurkar@gmail.com">jayshiurkar@gmail.com</a>
+                  <a class="cta-btn secondary" href="https://www.linkedin.com/in/jayshiurkar" target="_blank" rel="noreferrer">LinkedIn</a>
+                </div>
+              </div>
+              <div class="pad right" style="position:relative">
+                <div class="right-glow"></div>
+                <div class="metric-grid" style="grid-template-columns:1fr;position:relative">
+                  <div class="metric"><div class="label">Location</div><div class="value">New York City</div></div>
+                  <div class="metric"><div class="label">Best fit</div><div class="value">Client-facing platform roles</div></div>
+                  <div class="metric"><div class="label">Domain</div><div class="value">Finance, risk, workflows, adoption</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="inner">
+      <button class="bottom-btn active" data-target="overview">Overview</button>
+      <button class="bottom-btn" data-target="journey">Journey</button>
+      <button class="bottom-btn" data-target="skills">Skills</button>
+      <button class="bottom-btn" data-target="work">Case Work</button>
+      <button class="bottom-btn" data-target="contact">Contact</button>
+    </div>
+  </nav>
+
+  <script>
+    const journeyItems = {
+      consulting: {
+        kicker: 'Foundation',
+        title: 'Consulting and workflow transformation',
+        summary: 'Deloitte gave me the operating lens: discovery, alignment, delivery discipline, and real client constraints.',
+        details: 'I worked on automation-heavy transformation programs across risk, compliance, and operational workflows. The part that stayed with me most was not just the system build. It was understanding pain points, aligning business and technical teams, and making complex workflows easier to run in regulated environments.',
+        tags: ['Discovery','Stakeholder alignment','Delivery coordination'],
+        accent: 'cyan'
+      },
+      finance: {
+        kicker: 'Learning arc',
+        title: 'Finance depth with a practical lens',
+        summary: 'I am building finance depth around platforms, portfolio workflows, and institutional decision-making rather than theory alone.',
+        details: 'At NYU, I am shaping a stronger finance and technology lens through Management of Technology, finance coursework, and applied exposure to portfolio analysis and optimization. What draws me in is how platforms make financial workflows more usable, integrated, and scalable for clients.',
+        tags: ['NYU MOT','Portfolio context','Institutional workflows'],
+        accent: 'cyan'
+      },
+      communication: {
+        kicker: 'Strength',
+        title: 'Teaching, mentoring, and clarity',
+        summary: 'A lot of my edge comes from translating complexity into language other people can actually use.',
+        details: 'Through mentoring and teaching support roles, I have learned how to break down dense concepts into something clear, structured, and practical. That matters even more in client-facing platform roles where trust is often built through clarity.',
+        tags: ['Communication','Mentoring','Simplifying complexity'],
+        accent: 'cyan'
+      },
+      direction: {
+        kicker: 'Long-term fit',
+        title: 'Where I am heading',
+        summary: 'I am intentionally building toward long-term client relationships in institutional finance and fintech.',
+        details: 'The kind of work I want to do sits at the intersection of relationship building, financial context, and platform execution. I want to work closely with financial and institutional clients, understand their workflows deeply, and help them get more value from sophisticated systems over time.',
+        tags: ['Client engagement','Fintech','Institutional clients'],
+        accent: 'cyan'
+      }
+    };
+
+    const skillsItems = {
+      hybrid: {
+        kicker: 'Intersection',
+        title: 'Client engagement lives in the overlap',
+        summary: 'The strongest part of my profile is where client-facing judgment meets technical execution.',
+        details: 'I do my best work where relationship building, workflow understanding, and technical delivery reinforce each other. That means listening well, structuring ambiguity, translating requirements, and staying close enough to the system to support testing, rollout, and adoption.',
+        tags: ['Client discovery','Workflow translation','Adoption support'],
+        accent: 'violet'
+      },
+      client: {
+        kicker: 'Client-facing skills',
+        title: 'Relationship, communication, and structured coordination',
+        summary: 'These are the skills I use when the work depends on trust, clarity, and stakeholder alignment.',
+        details: 'Client discovery, executive communication, workshop facilitation, requirements gathering, stakeholder alignment, training, enablement, partner outreach, proposal support, and long-term relationship building.',
+        tags: ['Workshops','Stakeholder alignment','Executive communication'],
+        accent: 'violet'
+      },
+      technical: {
+        kicker: 'Technical skills',
+        title: 'Systems, platforms, and delivery depth',
+        summary: 'These are the skills that help me stay credible in complex platform environments.',
+        details: 'Workflow design, ServiceNow GRC, testing strategy, SIT and UAT coordination, automation, user stories and acceptance criteria, business and functional requirements, release readiness, data reporting, Python, SQL, Tableau, and platform documentation.',
+        tags: ['ServiceNow GRC','Testing and release','Analytics and reporting'],
+        accent: 'violet'
+      }
+    };
+
+    const workItems = [
+      {
+        id:'grc',
+        kicker:'Deloitte • regulated client environments',
+        title:'Multi-stakeholder GRC implementations',
+        summary:'Led workshops and requirement shaping across business, compliance, and technical teams in complex client environments.',
+        details:'Across four implementations, I ran workshops, demos, and requirement sessions with business, compliance, and technical stakeholders, then translated those discussions into BRDs, FRDs, and workflow specifications for GRC, UI Builder, and privacy assessment solutions. What made this complex was aligning multiple priorities while keeping delivery practical, auditable, and usable.',
+        tags:['BRDs / FRDs','GRC','Cross-functional workshops'],
+        accent:'cyan'
+      },
+      {
+        id:'release',
+        kicker:'Testing, issue resolution, and adoption',
+        title:'Critical release readiness and client validation',
+        summary:'Worked through release pressure by balancing testing discipline, issue resolution, and client confidence before go-live.',
+        details:'On multiple ServiceNow releases, I helped define testing strategy, authored and executed ATF, SIT, and UAT cases, supported troubleshooting, and worked through customer validation before production sign-off. In parallel, I delivered knowledge transfer and end-user training for 50+ stakeholders, which supported stronger adoption and reduced avoidable support load after go-live.',
+        tags:['Release readiness','UAT / SIT / ATF','Training and enablement'],
+        accent:'indigo'
+      },
+      {
+        id:'adamas',
+        kicker:'Capstone • sponsor and cross-functional team',
+        title:'Collaborative platform design in finance',
+        summary:'Worked across product thinking, market context, and solution design for a multi-agent investment platform.',
+        details:'For AdaMAS, I worked with a cross-functional capstone team, faculty advisors, and the Ada Analytics sponsor on a multi-agent investment platform. The work required balancing product thinking, market research, operating guardrails, and solution design across a proof-of-concept timeline. It sharpened how I think about trust, transparency, and workflow design in financial platforms.',
+        tags:['Product thinking','Financial platform','Cross-functional collaboration'],
+        accent:'violet'
+      }
+    ];
+
+    const thinkingItems = [
+      {
+        id:'trust',
+        kicker:'Client lens',
+        title:'Trust is earned through understanding',
+        summary:'Strong client work starts with understanding how a client really operates, not just what they ask for.',
+        details:'The strongest client engagement work starts with understanding what decisions matter, where information breaks, and what slows execution across teams. That context is what makes platform guidance useful rather than generic.',
+        tags:['Operating context','Diagnosis','Client trust'],
+        accent:'cyan'
+      },
+      {
+        id:'hands',
+        kicker:'Client lens',
+        title:'Engagement should be hands-on',
+        summary:'The roles I am drawn to combine relationship work with diagnosis, rollout, testing, training, and adoption.',
+        details:'I am most interested in roles where client engagement includes workflow mapping, testing support, rollout planning, training, and adoption, not only relationship management. That is where client value becomes tangible.',
+        tags:['Adoption','Workflow mapping','Rollout support'],
+        accent:'indigo'
+      },
+      {
+        id:'workflow',
+        kicker:'Workflow view',
+        title:'Platform value is cross-functional',
+        summary:'The real value of a platform shows up when front, middle, and back office connect more cleanly.',
+        details:'What interests me most is how front-office decisions, middle-office controls, and back-office execution connect through a more integrated platform view. A system becomes more trusted when it supports the full operating model, not just one point solution.',
+        tags:['Front office','Middle office','Back office'],
+        accent:'violet'
+      },
+      {
+        id:'feedback',
+        kicker:'Working principle',
+        title:'Client pain points should improve the product',
+        summary:'Good client work should create better documentation, prioritization, and product signals over time.',
+        details:'Solving one issue is useful. Turning recurring issues into better product thinking is more valuable. I am drawn to roles where client feedback can shape documentation, prioritization, and platform improvements in a structured way.',
+        tags:['Feedback loops','Product signals','Continuous improvement'],
+        accent:'cyan'
+      }
+    ];
+
+    function renderDetail(item){
+      return `
+        <div class="accordion open">
+          <div class="accent-${item.accent || 'cyan'}"></div>
+          <div class="accordion-head" style="cursor:default">
+            <div>
+              <div class="accordion-kicker">${item.kicker || ''}</div>
+              <div class="accordion-title">${item.title}</div>
+              ${item.summary ? `<div class="accordion-summary">${item.summary}</div>` : ``}
+            </div>
+            <div class="chev">⌄</div>
+          </div>
+          <div class="accordion-body" style="max-height:520px;opacity:1">
+            <div class="inner">
+              <div class="rule"></div>
+              <div class="body-copy">${item.details || ''}</div>
+              <div class="tag-row">${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAccordion(item){
+      return `
+        <details class="accordion" ${item.open ? 'open' : ''}>
+          <summary class="accordion-head">
+            <div>
+              <div class="accordion-kicker">${item.kicker || ''}</div>
+              <div class="accordion-title">${item.title}</div>
+              ${item.summary ? `<div class="accordion-summary">${item.summary}</div>` : ``}
+            </div>
+            <div class="chev">⌄</div>
+          </summary>
+          <div class="accordion-body">
+            <div class="inner">
+              <div class="rule"></div>
+              <div class="body-copy">${item.details || ''}</div>
+              <div class="tag-row">${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
+            </div>
+          </div>
+        </details>
+      `;
+    }
+
+    function setPage(id){
+      document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === id));
+      document.querySelectorAll('[data-target]').forEach(b => b.classList.toggle('active', b.getAttribute('data-target') === id));
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function setJourney(id){
+      document.querySelectorAll('[data-journey]').forEach(b => b.classList.toggle('active', b.getAttribute('data-journey') === id));
+      document.getElementById('journey-detail').innerHTML = renderDetail(journeyItems[id]);
+    }
+
+    function setSkill(id){
+      document.querySelectorAll('[data-skill]').forEach(b => b.classList.toggle('active', b.getAttribute('data-skill') === id));
+      document.getElementById('skills-detail').innerHTML = renderDetail(skillsItems[id]);
+    }
+
+    function setWork(id){
+      const current = workItems.find(x => x.id === id) || workItems[0];
+      document.getElementById('work-detail').innerHTML = renderDetail(current);
+    }
+
+    function setThinking(id){
+      const current = thinkingItems.find(x => x.id === id) || thinkingItems[0];
+      document.getElementById('thinking-detail').innerHTML = `
+        <div class="eyebrow">Current focus</div>
+        <div class="section-title" style="font-size:34px">${current.title}</div>
+        <div class="section-copy">${current.details}</div>
+      `;
+    }
+
+    document.querySelectorAll('[data-target]').forEach(btn => btn.addEventListener('click', () => setPage(btn.getAttribute('data-target'))));
+    document.querySelectorAll('[data-jump]').forEach(btn => btn.addEventListener('click', () => setPage(btn.getAttribute('data-jump'))));
+    document.querySelectorAll('[data-journey]').forEach(btn => btn.addEventListener('click', () => setJourney(btn.getAttribute('data-journey'))));
+    document.querySelectorAll('[data-skill]').forEach(btn => btn.addEventListener('click', () => setSkill(btn.getAttribute('data-skill'))));
+
+    document.getElementById('work-list').innerHTML = workItems.map((item, i) => renderAccordion({...item, open:i===0})).join('');
+    document.getElementById('thinking-list').innerHTML = thinkingItems.map((item, i) => renderAccordion({...item, open:i===0})).join('');
+
+    setJourney('consulting');
+    setSkill('hybrid');
+    setWork('grc');
+    setThinking('trust');
+
+    document.getElementById('work-list').querySelectorAll('details').forEach((node, idx) => {
+      node.addEventListener('toggle', () => { if(node.open) setWork(workItems[idx].id); });
+    });
+    document.getElementById('thinking-list').querySelectorAll('details').forEach((node, idx) => {
+      node.addEventListener('toggle', () => { if(node.open) setThinking(thinkingItems[idx].id); });
+    });
+  </script>
+</body>
 </html>
